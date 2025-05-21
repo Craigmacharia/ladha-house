@@ -1,0 +1,110 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="page-header mb-0">Manage Services <i class="bi bi-tools"></i></h1>
+    <a href="{% url 'add_service' %}" class="btn btn-success">
+      <i class="bi bi-plus-circle me-1"></i> Add New Service
+    </a>
+  </div>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <!-- Search Bar -->
+  <form method="get" class="d-flex mb-4">
+    <input class="form-control me-2" type="search" placeholder="Search services..." name="q" value="{{ request.GET.q }}">
+    <button class="btn btn-outline-success" type="submit">
+      <i class="bi bi-search me-1"></i> Search
+    </button>
+  </form>
+
+  <div class="table-container">
+    {% if services %}
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Duration</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for service in services %}
+            <tr>
+              <td><strong>{{ service.id }}</strong></td>
+              <td>{{ service.name }}</td>
+              <td>{{ service.duration_minutes }} mins</td>
+              <td class="fw-bold">Ksh {{ service.price }}</td>
+              <td>
+                <span class="badge {% if service.is_active %}badge-available{% else %}badge-unavailable{% endif %} rounded-pill p-2">
+                  <i class="bi {% if service.is_active %}bi-check-circle{% else %}bi-x-circle{% endif %} me-1"></i>
+                  {% if service.is_active %}Active{% else %}Inactive{% endif %}
+                </span>
+              </td>
+              <td class="action-buttons">
+                <a href="{% url 'edit_service' service.id %}" class="btn btn-sm btn-warning">
+                  <i class="bi bi-pencil-square me-1"></i> Edit
+                </a>
+                <a href="{% url 'delete_service' service.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this service permanently?');">
+                  <i class="bi bi-trash me-1"></i> Delete
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="empty-state py-5">
+        <div class="empty-state-icon">
+          <i class="bi bi-tools" style="font-size: 3rem; color: #dddfeb;"></i>
+        </div>
+        <h4>No Services Found</h4>
+        <p class="text-muted">No services match your search. Try a different query or add a new service.</p>
+        <a href="{% url 'add_service' %}" class="btn btn-primary mt-3">
+          <i class="bi bi-plus-circle me-1"></i> Add Service
+        </a>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Pagination -->
+  {% if services.has_other_pages %}
+  <nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+      {% if services.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ services.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+      {% endif %}
+      {% for num in services.paginator.page_range %}
+        <li class="page-item {% if services.number == num %}active{% endif %}">
+          <a class="page-link" href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ num }}</a>
+        </li>
+      {% endfor %}
+      {% if services.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ services.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+</div>
+{% endblock %}

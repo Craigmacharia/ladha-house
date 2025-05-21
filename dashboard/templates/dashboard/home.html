@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ladha House Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #1cc88a;
+            --accent-color: #f6c23e;
+            --dark-color: #5a5c69;
+        }
+        
+        body {
+            background-color: #f8f9fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #224abe 100%) !important;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+        
+        .navbar-brand {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 0.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-title {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-success {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-warning {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
+        }
+        
+        .welcome-header {
+            color: var(--dark-color);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .welcome-header:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            bottom: -10px;
+            left: 25%;
+            border-radius: 2px;
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .card-success .card-icon {
+            color: var(--secondary-color);
+        }
+        
+        .card-warning .card-icon {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+        <i class="bi bi-house-door-fill me-2"></i>
+        Ladha House Admin
+    </a>
+    <div class="d-flex align-items-center">
+        <span class="text-white me-3">Admin User</span>
+        <div class="dropdown">
+            <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                <i class="bi bi-person-circle"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+                <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <button type="submit" class="btn btn-login w-100 mt-3">Login</button>
+            </ul>
+        </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container py-4">
+    <h1 class="welcome-header text-center mb-5">Welcome Back, Admin <i class="bi bi-rocket"></i></h1>
+    
+    <div class="row g-4 justify-content-center">
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100">
+                <div class="card-body text-center p-4">
+                    <div class="card-icon">
+                        <i class="bi bi-door-open"></i>
+                    </div>
+                    <h5 class="card-title mb-3">Manage Rooms</h5>
+                    <p class="card-text text-muted mb-4">View, add, edit, or remove rooms from the system</p>
+                    <a href="{% url 'manage_rooms' %}" class="btn btn-primary w-100">
+                        <i class="bi bi-arrow-right-circle me-1"></i> View Rooms
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100 card-success">
+                <div class="card-body text-center p-4">
+                    <div class="card-icon">
+                        <i class="bi bi-tools"></i>
+                    </div>
+                    <h5 class="card-title mb-3">Manage Services</h5>
+                    <p class="card-text text-muted mb-4">Configure additional services for your guests</p>
+                    <a href="{% url 'manage_services' %}" class="btn btn-success w-100">View Services</a>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100 card-warning">
+                <div class="card-body text-center p-4">
+                    <div class="card-icon">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+                    <h5 class="card-title mb-3">View Bookings</h5>
+                    <p class="card-text text-muted mb-4">Check current and upcoming reservations</p>
+                    <a href="#" class="btn btn-warning w-100">
+                        <i class="bi bi-arrow-right-circle me-1"></i> View Bookings
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100">
+                <div class="card-body text-center p-4">
+                    <div class="card-icon">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <h5 class="card-title mb-3">Manage Guests</h5>
+                    <p class="card-text text-muted mb-4">View and manage guest information</p>
+                    <a href="#" class="btn btn-info w-100 text-white">
+                        <i class="bi bi-arrow-right-circle me-1"></i> View Guests
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0"><i class="bi bi-graph-up me-2"></i>Quick Stats</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-3 mb-md-0">
+                            <h3 class="text-primary">24</h3>
+                            <p class="text-muted mb-0">Total Rooms</p>
+                        </div>
+                        <div class="col-md-3 mb-3 mb-md-0">
+                            <h3 class="text-success">18</h3>
+                            <p class="text-muted mb-0">Occupied</p>
+                        </div>
+                        <div class="col-md-3 mb-3 mb-md-0">
+                            <h3 class="text-warning">6</h3>
+                            <p class="text-muted mb-0">Available</p>
+                        </div>
+                        <div class="col-md-3">
+                            <h3 class="text-info">92%</h3>
+                            <p class="text-muted mb-0">Occupancy Rate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

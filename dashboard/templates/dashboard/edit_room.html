@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Room - Ladha House</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #1cc88a;
+            --accent-color: #f6c23e;
+            --dark-color: #5a5c69;
+        }
+        
+        body {
+            background-color: #f8f9fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #224abe 100%) !important;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+        
+        .navbar-brand {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .page-header {
+            color: var(--dark-color);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .page-header:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            bottom: -10px;
+            left: 25%;
+            border-radius: 2px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+        }
+        
+        .form-control, .form-select {
+            border-radius: 0.35rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d3e2;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+        }
+        
+        .btn-success {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+        }
+        
+        .btn-success:hover {
+            background-color: #17a673;
+            border-color: #17a673;
+        }
+        
+        .back-btn {
+            color: var(--dark-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            color: var(--primary-color);
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #d1d3e2;
+            border-radius: 0.35rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #f8f9fc;
+            margin-bottom: 1rem;
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+        
+        .image-preview-text {
+            color: #6c757d;
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .current-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.35rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e3e6f0;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/dashboard/">
+        <i class="bi bi-house-door-fill me-2"></i>
+        Ladha House Admin
+    </a>
+    <div class="d-flex align-items-center">
+        <span class="text-white me-3">Admin User</span>
+        <div class="dropdown">
+            <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                <i class="bi bi-person-circle"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+                <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+            </ul>
+        </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{% url 'manage_rooms' %}" class="back-btn">
+            <i class="bi bi-arrow-left me-1"></i> Back to Rooms
+        </a>
+    </div>
+    
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-white py-3">
+                    <h1 class="page-header mb-0">Edit Room</h1>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <!-- Current Image Display -->
+                        {% if form.instance.image %}
+                        <div class="form-group">
+                            <label class="form-label">Current Image</label>
+                            <img src="{{ form.instance.image.url }}" class="current-image" alt="Current room image">
+                        </div>
+                        {% endif %}
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_name" class="form-label">Room Name</label>
+                                    <input type="text" class="form-control" id="id_name" name="name" value="{{ form.name.value }}" required>
+                                    <div class="invalid-feedback">
+                                        Please provide a room name.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_room_type" class="form-label">Room Type</label>
+                                    <select class="form-select" id="id_room_type" name="room_type" required>
+                                        <option value="" disabled>Select room type</option>
+                                        <option value="single" {% if form.room_type.value == 'single' %}selected{% endif %}>Single</option>
+                                        <option value="double" {% if form.room_type.value == 'double' %}selected{% endif %}>Double</option>
+                                        <option value="suite" {% if form.room_type.value == 'suite' %}selected{% endif %}>Suite</option>
+                                        <option value="deluxe" {% if form.room_type.value == 'deluxe' %}selected{% endif %}>Deluxe</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select a room type.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_price" class="form-label">Price per Night (Ksh)</label>
+                                    <input type="number" class="form-control" id="id_price" name="price" min="0" step="0.01" value="{{ form.price.value }}" required>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid price.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_capacity" class="form-label">Capacity</label>
+                                    <input type="number" class="form-control" id="id_capacity" name="capacity" min="1" value="{{ form.capacity.value }}" required>
+                                    <div class="invalid-feedback">
+                                        Please provide room capacity.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="id_description" class="form-label">Description</label>
+                            <textarea class="form-control" id="id_description" name="description" rows="3">{{ form.description.value }}</textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Features</label>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="id_wifi" name="features" value="wifi" {% if 'wifi' in form.features.value %}checked{% endif %}>
+                                        <label class="form-check-label" for="id_wifi">
+                                            WiFi
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="id_tv" name="features" value="tv" {% if 'tv' in form.features.value %}checked{% endif %}>
+                                        <label class="form-check-label" for="id_tv">
+                                            TV
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="id_ac" name="features" value="ac" {% if 'ac' in form.features.value %}checked{% endif %}>
+                                        <label class="form-check-label" for="id_ac">
+                                            Air Conditioning
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="id_heating" name="features" value="heating" {% if 'heating' in form.features.value %}checked{% endif %}>
+                                        <label class="form-check-label" for="id_heating">
+                                            Heating
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="id_breakfast" name="features" value="breakfast" {% if 'breakfast' in form.features.value %}checked{% endif %}>
+                                        <label class="form-check-label" for="id_breakfast">
+                                            Breakfast
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="id_parking" name="features" value="parking" {% if 'parking' in form.features.value %}checked{% endif %}>
+                                        <label class="form-check-label" for="id_parking">
+                                            Parking
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="id_image" class="form-label">Room Image</label>
+                            <div class="image-preview" id="imagePreview">
+                                {% if form.instance.image %}
+                                    <img src="{{ form.instance.image.url }}" alt="Room preview">
+                                {% else %}
+                                    <div class="image-preview-text">
+                                        <i class="bi bi-image fs-1"></i>
+                                        <p class="mb-0">Image preview will appear here</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <input type="file" class="form-control" id="id_image" name="image" accept="image/*">
+                            <small class="text-muted">Leave blank to keep current image</small>
+                        </div>
+                        
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="id_is_available" name="is_available" {% if form.is_available.value %}checked{% endif %}>
+                            <label class="form-check-label" for="id_is_available">Room is available for booking</label>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <a href="{% url 'manage_rooms' %}" class="btn btn-outline-secondary me-md-2">
+                                <i class="bi bi-x-circle me-1"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-save me-1"></i> Update Room
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Image preview functionality
+    const imageInput = document.getElementById('id_image');
+    const imagePreview = document.getElementById('imagePreview');
+    
+    imageInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            
+            reader.addEventListener('load', function() {
+                imagePreview.innerHTML = `<img src="${this.result}" alt="Room preview">`;
+            });
+            
+            reader.readAsDataURL(file);
+        } else {
+            {% if form.instance.image %}
+                imagePreview.innerHTML = `<img src="{{ form.instance.image.url }}" alt="Room preview">`;
+            {% else %}
+                imagePreview.innerHTML = `
+                    <div class="image-preview-text">
+                        <i class="bi bi-image fs-1"></i>
+                        <p class="mb-0">Image preview will appear here</p>
+                    </div>
+                `;
+            {% endif %}
+        }
+    });
+    
+    // Form validation
+    (function() {
+        'use strict';
+        
+        const forms = document.querySelectorAll('.needs-validation');
+        
+        Array.from(forms).forEach(function(form) {
+            form.addEventListener('submit', function(event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
+</body>
+</html>
