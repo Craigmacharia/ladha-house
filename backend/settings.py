@@ -14,12 +14,14 @@ REACT_APP_BUILD_DIR = os.path.join(BASE_DIR, 'ladhahouse-frontend', 'dist')  # o
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-93kf&vu*k%@&%#bq2ag2ivhz2cjylx8)a488lf4g86o=bi5w@e'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'fallback-key-for-dev')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
+
 
 
 # Application definition
@@ -157,16 +159,13 @@ LOGIN_URL = '/dashboard/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 
 
-# For production
 import dj_database_url
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
-
-
-import dj_database_url
-import os
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL')
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=600
     )
 }
+
+
