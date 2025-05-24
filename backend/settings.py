@@ -79,20 +79,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ladhahouse',          # <-- your database name
-        'USER': 'postgres',             # <-- default user unless you changed it
-        'PASSWORD': 'admin123',     # <-- the password you set during installation
-        'HOST': 'localhost',
-        'PORT': '5432',
 
-    }
-}
 
 
 
@@ -163,9 +151,11 @@ import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
+        default='postgres://postgres:admin123@localhost:5432/ladhahouse',  # fallback for local dev
         conn_max_age=600
     )
 }
+
+
 
 
