@@ -55,7 +55,7 @@ const recipes = [
   {
     condition: "High Cholesterol",
     title: "Quinoa Salad",
-    image: "fruit platter.png",
+    image: "ladhahouse-frontend/public/apple pie.png",
     ingredients: [
       "1 cup cooked quinoa",
       "1/2 cucumber, diced",
