@@ -10,7 +10,7 @@ const MyServiceBookings = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/my-service-bookings/", {
+        const res = await axios.get("https://ladha-house-1.onrender.com/api/my-service-bookings/", {
           headers: {
             Authorization: `Bearer ${token}`
           }

@@ -14,7 +14,7 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'https://ladha-house-1.onrender.com';
 
 const BookRoom = () => {
   const { roomId } = useParams();

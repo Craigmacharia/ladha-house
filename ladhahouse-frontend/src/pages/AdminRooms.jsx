@@ -5,7 +5,7 @@ function AdminRooms() {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/rooms/')
+    axios.get('https://ladha-house-1.onrender.com/api/rooms/')
       .then(res => setRooms(res.data))
       .catch(err => console.error(err));
   }, []);
