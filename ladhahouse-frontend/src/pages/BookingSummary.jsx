@@ -34,13 +34,23 @@ function BookingSummary() {
       try {
         setLoading(true);
         let bookingsData = [];
-
+    
         const API_URL = "https://ladha-house-1.onrender.com/api/my-bookings/";
-const response = await axios.get(API_URL, {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});
+        const response = await axios.get(API_URL, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+    
+        bookingsData = response.data;
+        setBookings(bookingsData); // if you use state
+      } catch (error) {
+        console.error("Error fetching bookings:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
 
         bookingsData = response.data.results || [];
 
