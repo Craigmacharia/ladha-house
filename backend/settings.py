@@ -158,4 +158,19 @@ DATABASES = {
 
 
 
+# backend/settings.py
+
+import django
+from django.contrib.auth import get_user_model
+
+if os.getenv("RENDER", "") == "true":
+    django.setup()
+    User = get_user_model()
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create_superuser(
+            username="admin",
+            email="admin@example.com",
+            password="admin123"
+        )
+
 
