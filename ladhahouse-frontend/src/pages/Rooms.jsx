@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaBed, FaMoneyBillWave, FaUsers, FaStar, FaWifi, FaTv, FaCoffee, FaSwimmingPool } from "react-icons/fa";
 import { GiMeal } from "react-icons/gi";
 
-const API_BASE_URL = "https://ladha-house-1.onrender.com:8000";
+const API_BASE_URL = "https://ladha-house-1.onrender.com";
+
 
 function Rooms() {
   const [rooms, setRooms] = useState([]);
