@@ -14,7 +14,12 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const API_BASE_URL = 'https://ladha-house-1.onrender.com';
+const response = await axios.post(`${API_BASE_URL}/api/room-bookings/`, bookingData, {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
+
 
 const BookRoom = () => {
   const { roomId } = useParams();

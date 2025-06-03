@@ -353,7 +353,7 @@ const Home = () => {
               "double2.png",
               "deluxe3.png",
               "slide3.jpg",
-              "slide2.jpg",
+        
             ].map((img, index) => (
               <div key={index} className={`col-md-4 col-6 gallery-item animate-on-scroll delay-${index % 3}`}>
                 <img 
