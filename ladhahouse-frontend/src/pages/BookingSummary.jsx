@@ -11,7 +11,6 @@ import {
   FaSpinner
 } from 'react-icons/fa';
 import { format, differenceInDays } from 'date-fns';
-const API_BASE_URL = "https://ladha-house-1.onrender.com";  // or the correct backend URL
 
 
 function BookingSummary() {
