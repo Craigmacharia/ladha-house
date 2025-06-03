@@ -12,7 +12,6 @@ import {
 } from 'react-icons/fa';
 import { format, differenceInDays } from 'date-fns';
 
-
 function BookingSummary() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,16 +41,6 @@ function BookingSummary() {
           },
         });
     
-        bookingsData = response.data;
-        setBookings(bookingsData); // if you use state
-      } catch (error) {
-        console.error("Error fetching bookings:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-
         bookingsData = response.data.results || [];
 
         if (newBooking && room) {
