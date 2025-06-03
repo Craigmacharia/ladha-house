@@ -605,7 +605,7 @@ const Home = () => {
 
       {/* Floating Action Button */}
       <a 
-        href="https://wa.me/254110928039" 
+        href="https://wa.me/0755453975" 
         target="_blank" 
         rel="noopener noreferrer"
         className="position-fixed bottom-0 end-0 m-4 pulse-animation"
