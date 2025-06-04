@@ -36,12 +36,15 @@ function BookingSummary() {
         setLoading(true);
         let bookingsData = [];
     
-        const API_URL = "https://ladha-house-1.onrender.com/api/my-bookings/";
-        const response = await axios.get(API_URL, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        import axios from "axios";
+
+const qu = "https://ladha-house-1.onrender.com";
+await axios.post(`${qu}/api/room-bookings/`, bookingData, {
+  headers: {        
+    Authorization: `Bearer ${token}`
+  }
+});
+
     
         bookingsData = response.data?.results || [];
     
