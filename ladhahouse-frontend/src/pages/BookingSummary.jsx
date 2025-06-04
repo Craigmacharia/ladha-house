@@ -28,6 +28,8 @@ function BookingSummary() {
       navigate("/login");
       return;
     }
+    //fetch bookings inaanza hapa
+
 
     const fetchBookings = async () => {
       try {
@@ -41,21 +43,24 @@ function BookingSummary() {
           },
         });
     
-        bookingsData = response.data.results || [];
-
+        bookingsData = response.data?.results || [];
+    
+        // Include newBooking if it's not in the response
         if (newBooking && room) {
-          const isNewBookingInList = bookingsData.some(b => 
-            b.id === newBooking.id || 
-            (b.check_in === newBooking.check_in && 
-             b.check_out === newBooking.check_out && 
-             b.email === newBooking.email)
+          const isAlreadyIncluded = bookingsData.some(b =>
+            b.id === newBooking.id ||
+            (
+              b.check_in === newBooking.check_in &&
+              b.check_out === newBooking.check_out &&
+              b.email === newBooking.email
+            )
           );
-
-          if (!isNewBookingInList) {
-            bookingsData = [{ ...newBooking, room }, ...bookingsData];
+    
+          if (!isAlreadyIncluded) {
+            bookingsData.unshift({ ...newBooking, room });
           }
         }
-
+    
         setBookings(bookingsData);
         setError(null);
       } catch (err) {
@@ -69,6 +74,8 @@ function BookingSummary() {
         setLoading(false);
       }
     };
+    
+    //corrections end hapa
 
     fetchBookings();
   }, [token, navigate, newBooking, room]);
