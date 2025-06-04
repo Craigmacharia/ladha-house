@@ -13,19 +13,7 @@ import {
 } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 const API_BASE_URL = "https://ladha-house-1.onrender.com";  // or the correct backend URL
-
-const response = await axios.post(
-  `${API_BASE_URL}/bookings/`,  // <- ensure this is the correct endpoint!
-  bookingData,
-  { 
-    headers: { 
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    } 
-  }
-);
 
 
 
