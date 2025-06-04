@@ -28,27 +28,21 @@ function BookingSummary() {
       navigate("/login");
       return;
     }
-    //fetch bookings inaanza hapa
-
 
     const fetchBookings = async () => {
       try {
         setLoading(true);
         let bookingsData = [];
-    
-        import axios from "axios";
 
-const qu = "https://ladha-house-1.onrender.com";
-await axios.post(`${qu}/api/room-bookings/`, bookingData, {
-  headers: {        
-    Authorization: `Bearer ${token}`
-  }
-});
+        const API_URL = "https://ladha-house-1.onrender.com/api/my-bookings/";
+        const response = await axios.get(API_URL, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-    
         bookingsData = response.data?.results || [];
-    
-        // Include newBooking if it's not in the response
+
         if (newBooking && room) {
           const isAlreadyIncluded = bookingsData.some(b =>
             b.id === newBooking.id ||
@@ -58,12 +52,12 @@ await axios.post(`${qu}/api/room-bookings/`, bookingData, {
               b.email === newBooking.email
             )
           );
-    
+
           if (!isAlreadyIncluded) {
             bookingsData.unshift({ ...newBooking, room });
           }
         }
-    
+
         setBookings(bookingsData);
         setError(null);
       } catch (err) {
@@ -77,8 +71,6 @@ await axios.post(`${qu}/api/room-bookings/`, bookingData, {
         setLoading(false);
       }
     };
-    
-    //corrections end hapa
 
     fetchBookings();
   }, [token, navigate, newBooking, room]);
