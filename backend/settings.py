@@ -101,7 +101,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [REACT_APP_BUILD_DIR]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # for collectstatic
 
-# AUTH
+# AUTHENTIFICATION
 LOGIN_URL = '/dashboard/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 
