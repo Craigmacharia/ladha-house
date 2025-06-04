@@ -123,3 +123,8 @@ if os.getenv("RENDER", "") == "true":
             password="admin123"
         )
 
+
+
+# Only for development or trusted API calls
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
