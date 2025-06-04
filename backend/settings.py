@@ -174,3 +174,11 @@ if os.getenv("RENDER", "") == "true":
         )
 
 
+
+CORS_ALLOWED_ORIGINS = [
+    "https://ladhahouse.netlify.app",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://ladhahouse.netlify.app",
+]
