@@ -15,7 +15,7 @@ urlpatterns = [
     path('api/auth/', include('auth.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/', include('services.urls')),  # NOT services.service-urls or anything else
+    path('api/', include('services.urls')),# NOT services.service-urls or anything else
 
 
     
