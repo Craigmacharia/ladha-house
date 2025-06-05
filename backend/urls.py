@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', include('dashboard.urls')),
-    path('', lambda request: redirect('admin_login')),  # 👈 Works now
+    path('', lambda request: redirect('admin_login')),
 
     # APIs
     path('api/', include('rooms.urls')),

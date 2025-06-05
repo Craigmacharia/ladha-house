@@ -9,7 +9,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('rooms/', views.RoomListView.as_view(), name='room-list'),
     path('rooms/<int:pk>/', views.RoomDetailView.as_view(), name='room-detail'),
-    path('my-bookings/', views.my_bookings, name='my-bookings'),  # ❌ No need to wrap with api_view again
+    path('my-bookings/', views.my_bookings, name='my-bookings'),# ❌ No need to wrap with api_view again
 ]
 
 

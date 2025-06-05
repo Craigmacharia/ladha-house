@@ -152,3 +152,15 @@ def my_bookings(request):
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
+
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+@csrf_exempt  # ⬅️ Add this line
+def create_booking(request):
+    ...
