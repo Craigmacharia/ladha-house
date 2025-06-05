@@ -13,8 +13,9 @@ import {
 } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const API_BASE_URL = "https://ladha-house-1.onrender.com";  // or the correct backend URL
 
-const API_BASE_URL = "https://ladha-house-1.onrender.com";  // Backend URL
+
 
 const BookRoom = () => {
   const { roomId } = useParams();
@@ -22,7 +23,7 @@ const BookRoom = () => {
   const location = useLocation();
   const room = location.state?.room;
   const token = localStorage.getItem('token');
-
+  
   const [fetchedRoom, setFetchedRoom] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isRoomLoading, setIsRoomLoading] = useState(false);
@@ -36,6 +37,7 @@ const BookRoom = () => {
     check_out: ''
   });
 
+  // Use the room from location or fetched room
   const displayRoom = room || fetchedRoom;
 
   useEffect(() => {
@@ -58,11 +60,12 @@ const BookRoom = () => {
           setIsRoomLoading(false);
         });
     }
-  }, [room, roomId]);
+  }, [room, roomId, setFetchedRoom]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
+    
     if (validationErrors[name]) {
       setValidationErrors(prev => ({ ...prev, [name]: '' }));
     }
@@ -71,27 +74,29 @@ const BookRoom = () => {
   const validateForm = () => {
     const errors = {};
     const today = new Date().toISOString().split('T')[0];
-
+    
     if (!form.full_name.trim()) errors.full_name = 'Full name is required';
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errors.email = 'Valid email is required';
     if (!/^[\d\s+\-()]{10,20}$/.test(form.phone)) errors.phone = 'Please enter a valid phone number';
     if (!form.check_in) errors.check_in = 'Check-in date is required';
     if (!form.check_out) errors.check_out = 'Check-out date is required';
-
+    
     if (form.check_in && form.check_out) {
       if (form.check_in >= form.check_out) {
         errors.check_out = 'Check-out must be after check-in';
       }
+      
       if (form.check_in < today) {
         errors.check_in = 'Check-in cannot be in the past';
       }
+      
       const maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1))
         .toISOString().split('T')[0];
       if (form.check_in > maxDate || form.check_out > maxDate) {
         errors.check_out = 'Bookings can only be made up to 1 year in advance';
       }
     }
-
+    
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -121,51 +126,49 @@ const BookRoom = () => {
       };
 
       const response = await axios.post(
-        `${API_BASE_URL}/api/room-bookings/`,
+        `${API_BASE_URL}/bookings/`,
         bookingData,
-        {
-          headers: {
+        { 
+          headers: { 
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
-          }
+          } 
         }
       );
-
-      navigate('/booking-summary', {
-        state: {
-          booking: response.data,
+      
+      navigate('/booking-summary', { 
+        state: { 
+          booking: response.data, 
           room: displayRoom,
           nights: calculateNights(),
           total: (calculateNights() * parseFloat(displayRoom?.price || 0)).toFixed(2)
-        }
+        } 
       });
     } catch (err) {
       console.error('Booking error:', err.response?.data);
-      const errorMessage = err.response?.data?.error ||
-        err.response?.data?.detail ||
-        Object.values(err.response?.data || {}).flat().join(', ') ||
-        'Booking failed. Please check your information and try again.';
+      const errorMessage = err.response?.data?.error || 
+                         err.response?.data?.detail ||
+                         Object.values(err.response?.data || {}).flat().join(', ') ||
+                         'Booking failed. Please check your information and try again.';
       toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
 
+  if (!displayRoom || isRoomLoading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center min-vh-100">
+        <div className="spinner-border" style={{ color: '#8d6e63' }} role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+        <span className="ms-2" style={{ color: '#5d4037' }}>Loading room details...</span>
+      </div>
+    );
+  }
+
   const maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1))
     .toISOString().split('T')[0];
-
-
-
-
-
-
-
-
-//end of corrections
-
-
-
-
 
   return (
     <div className="d-flex min-vh-100" style={{ backgroundColor: '#f5f5f5' }}>
