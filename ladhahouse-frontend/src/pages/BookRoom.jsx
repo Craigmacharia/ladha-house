@@ -126,17 +126,19 @@ const BookRoom = () => {
       };
 
       const response = await axios.post(
-        `${API_BASE_URL}/api/bookings/`, 
+        `${API_BASE_URL}/api/bookings/`,   // ✅ Correct URL with /api/
         bookingData,
-        ...
-    
-        { 
-          headers: { 
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          } 
+        {
+            headers: { 
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
         }
-      );
+    );
+    
+        
+    
+      
       
       navigate('/booking-summary', { 
         state: { 
