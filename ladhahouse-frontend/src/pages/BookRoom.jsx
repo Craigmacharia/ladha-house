@@ -126,8 +126,10 @@ const BookRoom = () => {
       };
 
       const response = await axios.post(
-        `${API_BASE_URL}/bookings/`,
+        `${API_BASE_URL}/api/bookings/`, 
         bookingData,
+        ...
+    
         { 
           headers: { 
             Authorization: `Bearer ${token}`,

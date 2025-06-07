@@ -3,14 +3,14 @@ from rest_framework.routers import DefaultRouter
 from . import views
 
 router = DefaultRouter()
+router.register(r'rooms', views.RoomViewSet, basename='room')  # ✅ Add this
 router.register(r'bookings', views.BookingViewSet, basename='booking')
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('rooms/', views.RoomListView.as_view(), name='room-list'),
-    path('rooms/<int:pk>/', views.RoomDetailView.as_view(), name='room-detail'),
-    path('my-bookings/', views.my_bookings, name='my-bookings'),# ❌ No need to wrap with api_view again
+    path('', include(router.urls)),  # includes both ViewSets
+    path('my-bookings/', views.my_bookings, name='my-bookings'),
 ]
+
 
 
 
