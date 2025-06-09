@@ -10,18 +10,20 @@ const MyServiceBookings = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const res = await axios.get("https://ladha-house-1.onrender.com/api/my-service-bookings/", {
+        const res = await axios.get("https://ladha-house-1.onrender.com/api/services/my-service-bookings/", {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
-        setBookings(res.data);
+        // Support { count, results } API responses
+        setBookings(res.data.results || res.data || []);
       } catch (err) {
         console.error("Failed to fetch service bookings", err);
       } finally {
         setLoading(false);
       }
     };
+    
 
     if (token) fetchBookings();
   }, [token]);
