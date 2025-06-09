@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FaTools, FaCalendarAlt, FaMoneyBillWave } from "react-icons/fa";
+import { FaTools, FaCalendarAlt, FaMoneyBillWave, FaUser, FaEnvelope, FaPhone } from "react-icons/fa";
 
 const API_BASE_URL = "https://ladha-house-1.onrender.com";
 
@@ -17,7 +17,6 @@ const MyServiceBookings = () => {
             Authorization: `Bearer ${token}`
           }
         });
-        // Support both raw array or { count, results }
         setBookings(res.data.results || res.data || []);
       } catch (err) {
         console.error("Failed to fetch service bookings", err);
@@ -28,6 +27,18 @@ const MyServiceBookings = () => {
 
     if (token) fetchBookings();
   }, [token]);
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "Not scheduled";
+    return new Intl.DateTimeFormat('en-KE', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(new Date(dateStr));
+  };
 
   if (loading) {
     return (
@@ -91,36 +102,48 @@ const MyServiceBookings = () => {
                       className="mb-0" 
                       style={{ color: '#5d4037', fontFamily: "'Playfair Display', serif" }}
                     >
-                      {booking.service.name}
+                      {booking.service?.name}
                     </h5>
                   </div>
 
                   <p style={{ color: '#6d4c41' }}>
-                    {booking.service.description}
+                    {booking.service?.description}
                   </p>
 
-                  <ul className="list-unstyled mt-auto">
+                  <ul className="list-unstyled mt-3 mb-0">
                     <li className="mb-2 d-flex align-items-center">
                       <FaCalendarAlt className="me-2" style={{ color: '#8d6e63' }} />
                       <span style={{ color: '#5d4037' }}>
-                        {new Date(booking.scheduled_date).toLocaleString('en-US', {
-                          weekday: 'long',
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}
+                        {formatDate(booking.scheduled_date)}
                       </span>
                     </li>
-                    <li className="d-flex align-items-center">
+                    <li className="mb-2 d-flex align-items-center">
                       <FaMoneyBillWave className="me-2" style={{ color: '#8d6e63' }} />
                       <span style={{ color: '#5d4037' }}>
-                        KES {booking.service.price.toLocaleString()}
+                        KES {parseFloat(booking.service?.price || 0).toLocaleString()}
+                      </span>
+                    </li>
+                    <li className="mb-2 d-flex align-items-center">
+                      <FaUser className="me-2" style={{ color: '#8d6e63' }} />
+                      <span style={{ color: '#5d4037' }}>
+                        {booking.full_name || "N/A"}
+                      </span>
+                    </li>
+                    <li className="mb-2 d-flex align-items-center">
+                      <FaEnvelope className="me-2" style={{ color: '#8d6e63' }} />
+                      <span style={{ color: '#5d4037' }}>
+                        {booking.email || "N/A"}
+                      </span>
+                    </li>
+                    <li className="mb-2 d-flex align-items-center">
+                      <FaPhone className="me-2" style={{ color: '#8d6e63' }} />
+                      <span style={{ color: '#5d4037' }}>
+                        {booking.phone || "N/A"}
                       </span>
                     </li>
                   </ul>
                 </div>
+
                 <div 
                   className="card-footer border-0 text-center"
                   style={{ backgroundColor: '#efebe9', color: '#8d6e63' }}
