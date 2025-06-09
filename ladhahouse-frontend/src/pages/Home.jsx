@@ -12,7 +12,7 @@ const Home = () => {
   // Slideshow images
   const slides = [
     {
-      image: "https://bing.com/th/id/BCO.7800a858-81ba-40d6-96ef-b32e57b80ff5.png",
+      image: "waiter.png",
       alt: "Luxury hotel room"
     },
     {
