@@ -27,7 +27,7 @@ function Login() {
     setIsLoading(true);
 
     try {
-      const res = await axios.post("https://ladha-house-1.onrender.com/api/auth/login/", credentials);
+      const res = await axios.post("http://127.0.0.1:8000/api/auth/login/", credentials);
       const token = res.data.access;
 
       localStorage.setItem("token", token);

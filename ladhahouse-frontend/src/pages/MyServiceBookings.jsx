@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTools, FaCalendarAlt, FaMoneyBillWave, FaUser, FaEnvelope, FaPhone } from "react-icons/fa";
 
-const API_BASE_URL = "https://ladha-house-1.onrender.com";
+const API_BASE_URL = "http://127.0.0.1:8000";
+
 
 const MyServiceBookings = () => {
   const [bookings, setBookings] = useState([]);

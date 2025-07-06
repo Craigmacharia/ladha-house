@@ -13,7 +13,8 @@ import {
 } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const API_BASE_URL = "https://ladha-house-1.onrender.com";  // or the correct backend URL
+const API_BASE_URL = "http://127.0.0.1:8000";
+  // or the correct backend URL
 
 
 

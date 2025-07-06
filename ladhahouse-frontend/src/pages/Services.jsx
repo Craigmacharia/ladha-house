@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { FaTools, FaClock, FaMoneyBillWave, FaArrowLeft, FaStar, FaWifi, FaConciergeBell, FaParking, FaSpa } from "react-icons/fa";
 import { GiMeal, GiLaurelsTrophy } from "react-icons/gi";
 
-const API_URL = "https://ladha-house-1.onrender.com/api";
+const API_URL = "http://127.0.0.1:8000/api";
+
 
 function Services() {
   const [services, setServices] = useState([]);

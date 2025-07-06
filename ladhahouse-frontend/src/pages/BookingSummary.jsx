@@ -34,7 +34,8 @@ function BookingSummary() {
         setLoading(true);
         let bookingsData = [];
 
-        const API_URL = "https://ladha-house-1.onrender.com/api/my-bookings/";
+        const API_URL = "http://127.0.0.1:8000/api/my-bookings/";
+
         const response = await axios.get(API_URL, {
           headers: {
             Authorization: `Bearer ${token}`,

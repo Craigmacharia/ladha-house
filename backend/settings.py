@@ -4,6 +4,7 @@ import django
 import dj_database_url
 from django.contrib.auth import get_user_model
 
+
 # BASE DIRECTORY
 BASE_DIR = Path(__file__).resolve().parent.parent
 REACT_APP_BUILD_DIR = os.path.join(BASE_DIR, 'ladhahouse-frontend', 'dist')
@@ -75,11 +76,25 @@ TEMPLATES = [
 
 # DATABASE
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://postgres:admin123@localhost:5432/ladhahouse',
-        conn_max_age=600
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ladhahouse',
+        'USER': 'postgres',
+        'PASSWORD': 'admin123',  # use your actual password here
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
+
+
+
+
+
+
+
+
+
+
 
 # PASSWORD VALIDATION
 AUTH_PASSWORD_VALIDATORS = [

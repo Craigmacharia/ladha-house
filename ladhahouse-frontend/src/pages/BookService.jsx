@@ -52,7 +52,8 @@ const BookService = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "https://ladha-house-1.onrender.com/api/service-bookings/",
+        "http://127.0.0.1:8000/api/service-bookings/",
+
         {
           ...form,
           service: serviceId,
