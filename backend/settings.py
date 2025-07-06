@@ -15,7 +15,7 @@ DEBUG = True  # Change to False in production
 ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
 
 # CORS / CSRF for Netlify frontend
-CORS_ALLOW_ALL_ORIGINS = False  # Important: set False for security
+CORS_ALLOW_ALL_ORIGINS = True  # Important: set False for security
 CORS_ALLOWED_ORIGINS = [
     "https://ladhahouse.netlify.app",
 ]
